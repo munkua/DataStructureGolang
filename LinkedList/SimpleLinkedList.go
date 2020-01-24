@@ -83,7 +83,7 @@ func (listPointer *List)pushToHead(key interface{}) {
 		node.Next = listPointer.Head
 		listPointer.Head = node
 		
-	}
+	}	
 	
 }	// complete!!
 
@@ -178,7 +178,6 @@ func (listPointer *List)insertNode(key interface{}, searchPointer *Node) {
 
 }	// complete!!
 
-
 func (listPointer *List)deleteTail() {
 	
 	if listPointer.Head == nil {		// if list is empty?
@@ -219,7 +218,6 @@ func (listPointer *List)deleteTail() {
 
 }	// complete!!
 
-
 func (listPointer *List)printAllNode() {
 
 	if (listPointer.isEmpty() == true) {
@@ -229,22 +227,52 @@ func (listPointer *List)printAllNode() {
 	} else {
 		
 		cycleNode := listPointer.Head		// cycleNode는 임시적으로 사용할 순환 노드포인터
-		count := 1
 		
-		for (cycleNode.Next != nil) {		// cycleNode의 Next필드가 nil일 때까지
+		for (cycleNode != nil) {		// cycleNode의 Next필드가 nil일 때까지
 
-			fmt.Println(count , "Node is = ", cycleNode.Key)		// 가리키는 노드의 Key필드값을 출력
+			fmt.Printf("%v -> ", cycleNode.Key)		// 가리키는 노드의 Key필드값을 출력
 			cycleNode = cycleNode.Next		// cycleNode를 한칸 앞으로 이동
-			count++
 		
 		}
 		
-		fmt.Println(count , "Node is = ", cycleNode.Key)		// 가리키는 노드의 Key필드값을 출력
-
+		fmt.Println()
 
 	}
 
 }	// Complete!!
+
+func (listPointer *List)reverse() {
+
+	if listPointer.isEmpty() == false {
+
+		if listPointer.Head == listPointer.Tail {
+
+			fmt.Println("At least two nodes are required.")
+
+		} else {
+
+			currNode := listPointer.Head
+			previousNode := getNode()
+			nextNode := getNode()
+			listPointer.Tail = listPointer.Head
+		
+			for currNode != nil {
+
+				nextNode = currNode.Next
+				currNode.Next = previousNode
+				previousNode = currNode
+				currNode = nextNode
+
+		
+			}
+		
+		listPointer.Head = previousNode
+	
+		}
+
+	} 
+
+}
 
 func main() {
 
@@ -256,13 +284,10 @@ func main() {
 	listPointer.pushToHead(3)
 	
 	node = listPointer.search(2)
-	listPointer.insertNode(4, node)
+	listPointer.insertNode(4, node)		// 3124
 	
-	listPointer.printAllNode()		// 3124
 	
-	listPointer.deleteHead()		// 124
-	listPointer.deleteTail()		// 12
-	
-	listPointer.printAllNode()		// 12
+	listPointer.reverse()
+	listPointer.printAllNode()
 
 }
